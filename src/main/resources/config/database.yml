@@ -1,0 +1,14 @@
+
+#
+# Support SQLITE and MYSQL
+#
+type: SQLITE
+#
+# Setting MYSQL
+#
+mysql:
+  host: "localhost"
+  port: 3306
+  database: "plugin"
+  username: "root"
+  password: "password"
