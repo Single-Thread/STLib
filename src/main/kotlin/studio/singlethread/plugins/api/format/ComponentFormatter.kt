@@ -1,4 +1,4 @@
-package org.singlethread.plugins.api.format
+package studio.singlethread.plugins.api.format
 
 import me.clip.placeholderapi.PlaceholderAPI
 import net.kyori.adventure.text.Component
@@ -7,9 +7,13 @@ import net.kyori.adventure.text.minimessage.MiniMessage
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
-import org.singlethread.plugins.STLib
+import studio.singlethread.plugins.STLib
+import studio.singlethread.plugins.util.FeatherDI
+
 
 object ComponentFormatter {
+
+    private fun library() = STLib.library
 
     fun mini(miniMessage: String): Component {
         return MiniMessage.miniMessage().deserialize(miniMessage)
@@ -19,18 +23,17 @@ object ComponentFormatter {
         return MiniMessage.miniMessage().serialize(component)
     }
 
-    fun parse(miniMessage: String): Component {
-        return parse(null, miniMessage)
+    fun parse(msg: String): Component {
+        return parse(null, msg)
     }
 
     fun parse(sender: CommandSender?, miniMessage: String): Component {
-        val message = if (STLib.plugin.isEnabledDependency("PlaceholderAPI")) {
-            val player = sender as? Player
-            PlaceholderAPI.setPlaceholders(player, miniMessage)
-        } else {
-            miniMessage
-        }
-        return mini(message)
+        return ComponentFormatter.mini(
+            if (library().isEnabledDependency("PlaceholderAPI")) PlaceholderAPI.setPlaceholders(
+                if (sender is Player) sender else null,
+                miniMessage
+            ) else miniMessage
+        )
     }
 
     fun legacy(component: Component): String {
@@ -40,15 +43,4 @@ object ComponentFormatter {
     fun legacy(legacyCharacter: Char, component: Component): String {
         return LegacyComponentSerializer.legacy(legacyCharacter).serialize(component)
     }
-
-//    fun system(sender: CommandSender?, miniMessage: String): Component {
-//        val lore = parse(sender, framework().modules.themeModule.systemMessage)
-//        return parse(miniMessage).hoverEvent(HoverEvent.showText(lore))
-//    }
-//
-//    fun system(sender: CommandSender?, component: Component): Component {
-//        val lore = parse(sender, framework().modules.themeModule.systemMessage)
-//        return component.hoverEvent(HoverEvent.showText(lore))
-//    }
-
 }

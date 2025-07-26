@@ -12,3 +12,4 @@ mysql:
   database: "plugin"
   username: "root"
   password: "password"
+

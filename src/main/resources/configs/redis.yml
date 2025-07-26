@@ -1,0 +1,11 @@
+# USERNAME_PASSWORD , URL , NONE
+use: false
+
+redis:
+  authentication: USERNAME_PASSWORD
+  host: "host"
+  port: 6379 # Default Redis Port
+  timeout: 500 # 500 Milliseconds Timeout
+  username: "username"
+  password: "password"
+  url: "url"

@@ -1,11 +1,22 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     kotlin("jvm") version "2.1.21"
     id("com.gradleup.shadow") version "8.3.0"
     id("xyz.jpenilla.run-paper") version "2.3.1"
 }
 
-group = "org.singlethread"
-version = "1.0-SNAPSHOT"
+group = "studio.singlethread"
+version = "1.0.0"
+
+val libs: ConfigurableFileTree = fileTree("libs") {
+    include("*.jar")
+    exclude("ignore-*.jar")
+}
+val impl: ConfigurableFileTree = fileTree("impl") {
+    include("*.jar")
+    exclude("ignore-*.jar")
+}
 
 repositories {
     mavenCentral()
@@ -18,6 +29,15 @@ repositories {
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/") {
         name = "placeholderapi"
     }
+    maven("https://jitpack.io") {
+        name = "jitpack.io"
+    }
+
+    maven("https://repo.flyte.gg/releases") {
+    }
+    maven("https://repo.codemc.org/repository/maven-public/")
+
+
 }
 
 dependencies {
@@ -28,8 +48,8 @@ dependencies {
     compileOnly("org.jetbrains.kotlin:kotlin-reflect")
 
     // mini message api
-    compileOnly("net.kyori:adventure-text-minimessage:4.16.0")
-    compileOnly("net.kyori:adventure-platform-bukkit:4.3.4")
+    implementation("net.kyori:adventure-text-minimessage:4.22.0")
+    implementation("net.kyori:adventure-platform-bukkit:4.3.4")
 
     // database api
     compileOnly("org.jetbrains.exposed:exposed-core:0.49.0")
@@ -41,6 +61,14 @@ dependencies {
     //plugin api
     compileOnly("me.clip:placeholderapi:2.11.6")
 
+    // etc api
+    implementation("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.4")
+    implementation("gg.flyte:twilight:1.1.22")
+    implementation("dev.jorel:commandapi-bukkit-shade:10.1.0")
+    compileOnly (libs)
+    //annotationProcessor (libs)
+    implementation (impl)
+    //annotationProcessor (impl)
 }
 
 tasks {
@@ -48,7 +76,7 @@ tasks {
         // Configure the Minecraft version for our task.
         // This is the only required configuration besides applying the plugin.
         // Your plugin's jar (or shadowJar if present) will be used automatically.
-        minecraftVersion("1.19.4")
+        minecraftVersion("1.20.1")
     }
 }
 
@@ -68,4 +96,17 @@ tasks.processResources {
     filesMatching("paper-plugin.yml") {
         expand(props)
     }
+}
+
+tasks.named<ShadowJar>("shadowJar") {
+    archiveClassifier.set("")
+
+    archiveClassifier = null
+    archiveVersion = version.toString()
+
+    // 예시 리로케이션
+    relocate("net.kyori.adventure.platform.bukkit", "studio.singlethread.kyori")
+    relocate("dev.jorel.commandapi", "studio.singlethread.commandapi")
+    relocate("gg.flyte.twilight", "studio.singlethread.twilight")
+
 }

@@ -1,6 +1,4 @@
-package org.singlethread.plugins.api.platform
-
-import org.singlethread.plugins.api.event.STListener
+package studio.singlethread.plugins.api.platform
 
 object SystemEnvironment {
 
