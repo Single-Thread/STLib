@@ -7,6 +7,9 @@ object FeatherDI {
     fun <T : Any> register(clazz: Class<T>, instance: T) {
         beans[clazz] = instance
     }
+    fun <T : Any> register(clazz: Class<T>) {
+        beans[clazz] = clazz.getDeclaredConstructor().newInstance()
+    }
 
     fun <T : Any> getBean(clazz: Class<T>): T {
         return beans[clazz] as T

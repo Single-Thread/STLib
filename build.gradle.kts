@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "studio.singlethread"
-version = "1.0.0"
+version = "1.0.1"
 
 val libs: ConfigurableFileTree = fileTree("libs") {
     include("*.jar")
@@ -36,7 +36,9 @@ repositories {
     maven("https://repo.flyte.gg/releases") {
     }
     maven("https://repo.codemc.org/repository/maven-public/")
-
+    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/") {
+        name = "maven-snapshots"
+    }
 
 }
 
@@ -48,7 +50,7 @@ dependencies {
     compileOnly("org.jetbrains.kotlin:kotlin-reflect")
 
     // mini message api
-    implementation("net.kyori:adventure-text-minimessage:4.22.0")
+    compileOnly("net.kyori:adventure-text-minimessage:4.22.0")
     implementation("net.kyori:adventure-platform-bukkit:4.3.4")
 
     // database api
@@ -56,12 +58,13 @@ dependencies {
     compileOnly("org.jetbrains.exposed:exposed-dao:0.49.0")
     compileOnly("org.jetbrains.exposed:exposed-jdbc:0.49.0")
     compileOnly("org.xerial:sqlite-jdbc:3.45.2.0")
-    compileOnly("mysql:mysql-connector-java:8.0.33")
+    compileOnly("com.mysql:mysql-connector-j:9.1.0")
 
     //plugin api
     compileOnly("me.clip:placeholderapi:2.11.6")
 
     // etc api
+    implementation("com.alessiodp.libby:libby-bukkit:2.0.0-SNAPSHOT")
     implementation("com.github.Carleslc.Simple-YAML:Simple-Yaml:1.8.4")
     implementation("gg.flyte:twilight:1.1.22")
     implementation("dev.jorel:commandapi-bukkit-shade:10.1.0")

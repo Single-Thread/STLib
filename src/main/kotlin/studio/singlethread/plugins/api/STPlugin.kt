@@ -19,15 +19,12 @@ import studio.singlethread.plugins.util.FeatherDI
 abstract class STPlugin()  : JavaPlugin() {
 
 
-    companion object {
-        lateinit var storage: Storage
-            private set
-        lateinit var plugin: STPlugin
-            private set
-        lateinit var adventure: BukkitAudiences
-            private set
-
-    }
+    lateinit var storage: Storage
+        private set
+    lateinit var plugin: STPlugin
+        private set
+    lateinit var adventure: BukkitAudiences
+        private set
 
     private val listeners: MutableSet<STListener<out STPlugin>> = mutableSetOf()
     private val commands: MutableSet<STCommand<out STPlugin>> = mutableSetOf()
@@ -52,8 +49,8 @@ abstract class STPlugin()  : JavaPlugin() {
             }
             return
         }
-        enable()
         for (plugin in this.description.softDepend) library().hookDependency(plugin)
+        enable()
         console("<green>Enable!</green>")
         library().loadPlugin(this)
 
@@ -67,28 +64,27 @@ abstract class STPlugin()  : JavaPlugin() {
     }
     final override fun onLoad() {
 
-
         load()
 
     }
 
-    fun library() = STLib.library
+    private fun library() = FeatherDI.getBean(STLib::class.java)
 
-    fun console(message: Component) {
+    protected fun console(message: Component) {
         async { adventure.console().sendMessage(prefix.append(message)) }
     }
-    fun console(minimessage: String) {
+    protected fun console(minimessage: String) {
         console(mini(minimessage))
     }
 
-    fun register(command: STCommand<out STPlugin>) {
+    protected fun register(command: STCommand<out STPlugin>) {
         commands.add(command)
         command.command().register()
     }
-    fun register(listener: STListener<out STPlugin>) {
+    protected fun register(listener: STListener<out STPlugin>) {
         Bukkit.getPluginManager().registerEvents(listener, this)
     }
-    fun register(name: String, permissionDefault: PermissionDefault) {
+    protected fun register(name: String, permissionDefault: PermissionDefault) {
         Bukkit.getPluginManager().addPermission(Permission(name, permissionDefault))
     }
 

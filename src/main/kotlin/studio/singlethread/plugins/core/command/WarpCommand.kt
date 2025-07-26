@@ -1,8 +1,7 @@
-package studio.singlethread.plugins.command
+package studio.singlethread.plugins.core.command
 
 import dev.jorel.commandapi.CommandAPICommand
 import dev.jorel.commandapi.executors.CommandExecutor
-import org.bukkit.command.CommandSender
 import studio.singlethread.plugins.STLib
 import studio.singlethread.plugins.api.command.STCommand
 
