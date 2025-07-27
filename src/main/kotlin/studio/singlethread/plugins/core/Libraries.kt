@@ -1,4 +1,4 @@
-package studio.singlethread.plugins.util
+package studio.singlethread.plugins.core
 
 import studio.singlethread.plugins.api.STPlugin
 import com.alessiodp.libby.BukkitLibraryManager;

@@ -1,4 +1,4 @@
-package studio.singlethread.plugins.util
+package studio.singlethread.plugins.core
 
 import gg.flyte.twilight.Twilight
 import gg.flyte.twilight.data.Redis

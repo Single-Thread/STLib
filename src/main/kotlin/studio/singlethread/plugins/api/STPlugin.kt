@@ -13,7 +13,7 @@ import studio.singlethread.plugins.api.event.STListener
 import studio.singlethread.plugins.api.format.ComponentFormatter.mini
 import studio.singlethread.plugins.api.platform.MinecraftVersion
 import studio.singlethread.plugins.api.storage.Storage
-import studio.singlethread.plugins.util.FeatherDI
+import studio.singlethread.plugins.core.di.FeatherDI
 
 
 abstract class STPlugin()  : JavaPlugin() {

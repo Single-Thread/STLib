@@ -8,7 +8,7 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import studio.singlethread.plugins.STLib
-import studio.singlethread.plugins.util.FeatherDI
+import studio.singlethread.plugins.core.di.FeatherDI
 
 
 object ComponentFormatter {

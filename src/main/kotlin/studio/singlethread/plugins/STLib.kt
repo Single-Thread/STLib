@@ -3,16 +3,15 @@ package studio.singlethread.plugins
 import dev.jorel.commandapi.CommandAPI
 import dev.jorel.commandapi.CommandAPIBukkitConfig
 import gg.flyte.twilight.Twilight
-import gg.flyte.twilight.scheduler.async
 import org.bukkit.Bukkit
 import studio.singlethread.plugins.api.STPlugin
 import studio.singlethread.plugins.api.config.setting.SettingConfiguration
 import studio.singlethread.plugins.core.command.WarpCommand
-import studio.singlethread.plugins.util.APIBuilder
+import studio.singlethread.plugins.core.APIBuilder
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import studio.singlethread.plugins.util.FeatherDI
-import studio.singlethread.plugins.util.Libraries
+import studio.singlethread.plugins.core.di.FeatherDI
+import studio.singlethread.plugins.core.Libraries
 
 
 class STLib : STPlugin() {
@@ -29,10 +28,9 @@ class STLib : STPlugin() {
     private val plugins: MutableMap<String, STPlugin> = HashMap<String, STPlugin>()
     private val hooks: MutableMap<String, Boolean> = HashMap<String, Boolean>()
     private val log: Logger = LoggerFactory.getLogger("STLib")
-    private val libraries: Libraries
+    private val libraries: Libraries = Libraries(this)
 
     init {
-        libraries = Libraries(this)
         libraries.load("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.23")
         libraries.load("org.jetbrains.kotlin:kotlin-reflect:1.9.23")
         libraries.load("org.jetbrains.exposed:exposed-core:0.49.0")

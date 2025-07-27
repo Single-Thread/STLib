@@ -1,4 +1,4 @@
-package studio.singlethread.plugins.util
+package studio.singlethread.plugins.core.di
 
 object FeatherDI {
 
